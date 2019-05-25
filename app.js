@@ -14,27 +14,19 @@ function startPage() {
 
 creatingBtn();
 }
-
    function creatingBtn(name) {
        if(buttonCreated === false){
        for (var i = 0; i < topics.length; i++) {
-
            let button = $("<button>").attr("id", topics[i]).attr("class", "topicBtn").text(topics[i]);
            button.appendTo(".button-view");
-
            console.log("kjdfkjasdlfkj");
-
        }
         } 
          buttonCreated= true;
          console.log(name)
     }
    
-
    $(document).on("click", ".topicBtn", function(){
-       
-
-       
         let results = $(this).attr("id");
         console.log(results);
         let queryURL =  "https://api.giphy.com/v1/gifs/search?q=" +results + "&api_key=XdXI44bgPmc7886QFjPVxmXeVexmdFoh&limit=10&rating=&lang=en";
@@ -44,13 +36,10 @@ creatingBtn();
             method: "GET"
         }).then(function(response) {
          for (var j = 0; j <= 10; j++){   
-            // console.log(response);
-
             let gifImg = $("<img>");
-            gifImg.attr("src", response.data[j].images.fixed_width.url);
+            gifImg.attr("src", response.data[j].images.fixed_width_still.url);
             gifImg.attr("id", "gif-img");
             
-
             let imgRating = $("<p>").text("Rating : " + response.data[j].rating);
             imgRating.attr("id", "rating");
             $(imgRating).prependTo(".gif-view");
@@ -64,40 +53,46 @@ creatingBtn();
    $(document).on("click", "#gif-img", function() {
     for (var j = 0; j <= 10; j++){   
     var state = $(this).attr("data-state");
-        console.log(state);
+        
       if (state === "still") {
         $(this).attr("src", $(this).attr("data-animate"));
         $(this).attr("data-state", "animate");
       } else {
         $(this).attr("src", $(this).attr("data-still"));
         $(this).attr("data-state", "still");
-    };
+        };
     };
    });
 
    
-
    $("#submitBtn").on("click", function submit(){
         console.log("sfsdfasdfsdaf");
-       let boxValue = $("#userInputBox").val();
+        let boxValue = $("#userInputBox").val();
         console.log(boxValue);
-        let buttons = true
-        return boxValue;
+        let newBtn = $("<button>").attr("id", boxValue).attr("class", "topicBtn").text(boxValue);
+        newBtn.appendTo(".button-view");
 
+        let results = $(this).attr("id");
+        console.log(results);
+        let queryURL =  "https://api.giphy.com/v1/gifs/search?q=" +results + "&api_key=XdXI44bgPmc7886QFjPVxmXeVexmdFoh&limit=10&rating=&lang=en";
 
-        
-        // button = $("<button>").attr("id", topics[i]).attr("class", "topicBtn").text(topics[i]);
-        // button.appendTo(".button-view");
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function(response) {
+            gifImg = $("<img>");
+            gifImg.attr("src", response.data[j].images.fixed_width_still.url);
+            gifImg.attr("id", "gif-img");
+            
+            let imgRating = $("<p>").text("Rating : " + response.data[j].rating);
+            imgRating.attr("id", "rating");
+            $(imgRating).prependTo(".gif-view");
+            $(gifImg).prependTo(".gif-view");
 //create another button like in start game
 //do ajax call again to get new info
-
-
-   })
-
-
-
-
-}
+        });
+    });
+};
 // app will take these topics and create a button to the html
 //try using a loop to append button for each string in the array activity 6, 7, 8, 9
 
@@ -110,4 +105,4 @@ creatingBtn();
 //add a form to the page that will take the value from the input box and it gets added 
 //to the topics array. then make a function call that takes each topic in the
 //arry and remakes the buttons on the page 
-//need to make an input type box to append to the html
+//need to make an input type box to append to the 
