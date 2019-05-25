@@ -1,15 +1,15 @@
 // create array of strings to be searched
-let topics = ["pizza", "cake", "nachos", "tacos", "ice cream", "popsicle", "cookie"];
+let topics = ["totoro", "ponyo", "soot sprite", "howl's moving castle", "calcifer", "spirited away", "kiki's delivery service"];
 let buttonCreated = false;
 let buttons = false
 window.onload = function() {
 startPage();
 function startPage() {
 
-    let userInputBox = $("<input>").attr("id", "userInputBox");
+    let userInputBox = $("<input placeholder='New Gif'>").attr("id", "userInputBox");
     $(userInputBox).appendTo(".user-input");
     console.log(userInputBox);
-    let submitBtn = $("<button>").attr("id", "submitBtn").text("Submit");
+    let submitBtn = $("<button>").attr("id", "submitBtn").text("Add");
     $(submitBtn).appendTo(".user-input");
 
 creatingBtn();
@@ -44,16 +44,38 @@ creatingBtn();
             method: "GET"
         }).then(function(response) {
          for (var j = 0; j <= 10; j++){   
-            console.log(response);
+            // console.log(response);
 
             let gifImg = $("<img>");
-            gifImg.attr("src", response.data[j].images.original_still.url);
-            $(gifImg).appendTo(".gif-view");
+            gifImg.attr("src", response.data[j].images.fixed_width.url);
+            gifImg.attr("id", "gif-img");
+            
 
-         }
-        })
-   })
+            let imgRating = $("<p>").text("Rating : " + response.data[j].rating);
+            imgRating.attr("id", "rating");
+            $(imgRating).prependTo(".gif-view");
+            $(gifImg).prependTo(".gif-view");
+    
+         };
+        });
+        
+   });
 
+   $(document).on("click", "#gif-img", function() {
+    for (var j = 0; j <= 10; j++){   
+    var state = $(this).attr("data-state");
+        console.log(state);
+      if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+      } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+    };
+    };
+   });
+
+   
 
    $("#submitBtn").on("click", function submit(){
         console.log("sfsdfasdfsdaf");
@@ -62,11 +84,12 @@ creatingBtn();
         let buttons = true
         return boxValue;
 
-if (buttons === true) {
-    creatingButtons(submit(boxValue))
-}
+
+        
+        // button = $("<button>").attr("id", topics[i]).attr("class", "topicBtn").text(topics[i]);
+        // button.appendTo(".button-view");
 //create another button like in start game
-//do ajax call againto get new info
+//do ajax call again to get new info
 
 
    })
