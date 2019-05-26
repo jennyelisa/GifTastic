@@ -68,8 +68,10 @@ creatingBtn();
 
    
    $("#submitBtn").on("click", function submit(){
+    event.preventDefault();
+
         console.log("sfsdfasdfsdaf");
-        let boxValue = $("#userInputBox").val();
+        let boxValue = $("#userInputBox").val().trim();
         console.log(boxValue);
         let newBtn = $("<button>").attr("id", boxValue).attr("class", "topicBtn").text(boxValue);
         newBtn.appendTo(".button-view");
