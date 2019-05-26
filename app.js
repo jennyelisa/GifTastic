@@ -38,6 +38,8 @@ creatingBtn();
          for (var j = 0; j <= 10; j++){   
             let gifImg = $("<img>");
             gifImg.attr("src", response.data[j].images.fixed_width_still.url);
+            gifImg.attr("data-animate", response.data[j].images.fixed_width.url);
+            gifImg.attr("data-still", response.data[j].images.fixed_width_still.url);
             gifImg.attr("id", "gif-img");
             
             let imgRating = $("<p>").text("Rating : " + response.data[j].rating);
