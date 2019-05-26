@@ -73,4 +73,9 @@ body {
 
 #rating {
     padding-right:5px;
+    border: 2px solid grey;
+    background-color: grey;
+    color: white;
+    font-size: 16px;
+   height: 30px;
 }
